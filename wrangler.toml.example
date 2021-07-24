@@ -1,0 +1,28 @@
+name = "v4ex-ledger"
+# Credentials
+account_id = ""
+zone_id = ""
+# type = "javascript" is required to use the `[build]` section
+type = "javascript"
+workers_dev = true
+route = "ledger.v4ex.com/*"
+
+# KV
+kv_namespaces = [ 
+  { binding = "LEDGER", id = "" },
+  { binding ="KV", id = "" }
+]
+
+
+[build]
+command = "npm install && npm run build"
+[build.upload]
+dir="build"
+format = "modules"
+main = "./worker.mjs"
+
+
+[durable_objects]
+bindings = [
+  { name = "LEDGER_WRITER", class_name = "LedgerWriter" }
+]
